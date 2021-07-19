@@ -11,6 +11,7 @@ const connection = mysql.createConnection({
     user: 'root',
 
     // Be sure to update with your own MySQL password!
+    // password: '0985',
     database: 'employee_managementDB',
 });
 
@@ -23,10 +24,15 @@ connection.connect((err) => {
     start();
 });
 
-function direction(){
+function direction() {
     inquirer.prompt({
         name: "direction",
-        type:""
+        type: "list",
+        message: "Welcome to Employee Management! What would you like to do?",
+        choice: ["View Department", "View Roles", " VIew Employees", "Add Department", "Add Roles", "Add Employees", "Update Employee's Role"]
+
+    // }).then((response) => {
+
     })
 }
 
@@ -34,5 +40,6 @@ function start() {
     connection.query("SELECT * FROM employee", (err, data) => {
         if (err) throw err;
         console.table(data)
+        direction();
     })
 }
