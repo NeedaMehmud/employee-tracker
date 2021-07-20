@@ -19,3 +19,29 @@ VALUES ("Instruction");
 INSERT INTO department (name)
 VALUES ("Cafeteria");
 
+CREATE TABLE role (
+id INT NOT NULL AUTO_INCREMENT,
+title VARCHAR(30) NOT NULL,
+salary DECIMAL(10, 2)NOT NULL,
+department_id INT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (department_id) REFERENCES department (id)
+);
+
+INSERT INTO role (title, salary, department_id)
+VALUES ("Assistant Principal", 80000, 1),("Counselor", 70000,1);
+
+CREATE TABLE employee(
+id INT NOT NULL AUTO_INCREMENT,
+first_name VARCHAR(30) NOT NULL,
+last_name VARCHAR(30) NOT NULL,
+role_id INT NOT NULL,
+manager_id INT,
+PRIMARY KEY (id),
+FOREIGN KEY (role_id) REFERENCES  role (id),
+FOREIGN KEY (manager_id) REFERENCES employee (id)
+);
+
+INSERT INTO employee(first_name, last_name, role_id, manager_id)
+VALUES("Jason", "Jeff",1, null),("Sherrie", "Jackson",2,1), ("Tomi", "Perez", 3, 1)
+

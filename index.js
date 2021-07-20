@@ -3,16 +3,12 @@ const inquirer = require('inquirer');
 
 const connection = mysql.createConnection({
     host: 'localhost',
-
-    // Your port; if not 3306
     port: 3306,
-
-    // Your username
     user: 'root',
-
-    // Be sure to update with your own MySQL password!
+    password: '',
     database: 'employee_managementDB',
 });
+
 
 //'INSERT INTO products SET? iceCreamCRUD.js
 // Connect to the DB
@@ -38,26 +34,56 @@ function direction() {
             'Exit']
 
     })
-        .then((response) => {
-            if (response === "View Department") {
-                console.log("You chose View Department.../n");
-                viewDepartment();
-            } else if (response.direction === "Add Employees") {
-                console.log("You chose to Add Employees...\n");
-                AddEmployees();
-            }
-            else if (response.direction === "Exit") {
-                console.log("You chose to Exit .../n");
-                connection.end();
+        // .then((response) => {
+        //     if (response === "View Department") {
+        //         console.log("You chose View Department.../n");
+        //         viewDepartment();
+        //     } else if (response.direction === "Add Employees") {
+        //         console.log("You chose to Add Employees...\n");
+        //         AddEmployees();
+        //     }
+        //     else if (response.direction === "Exit") {
+        //         console.log("You chose to Exit .../n");
+        //         connection.end();
+        //     }
+        // });
+        .then(function (data) {
+            switch (data.choice) {
+                case "View All Employees?":
+                    break;
+                case "View All Employee's By Roles?":
+                    break;
+                case "View all Emplyees By Deparments":
+                    break;
+                case "Add Employee?":
+                    break;
+                case "Update Employee's role":
+                    break;
+                case "Add Role?":
+                    break;
+                case "Add Department?":
+                    break;
+                case "Exit":
+                    break;
+
             }
         })
+
 }
 
-function AddEmployees(){
-    connection.query(
-
-    )
+function AddEmployees() {
+    connection.query('Select * from role', (err, data) => {
+        // OR
+        // const roleChoices = data.map(role) => {
+        //     return {
+        //         name: role.title,
+        //         value: role.id,
+        //     }
+    })
+    // console.table(data)
 }
+
+
 
 function viewDepartment() {
     console.log("View Department function initialized");
