@@ -85,6 +85,8 @@ function AddEmployees() {
 
 
 
+
+
 function viewDepartment() {
     console.log("View Department function initialized");
     connection.query("SELECT * from department", (err, data) => {
