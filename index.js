@@ -38,6 +38,7 @@ function direction() {
             console.log(data.direction);
             switch (data.direction) {
                 case "View Department":
+                    viewDepartment()
                     break;
                 case "View Roles":
                     break;
@@ -76,15 +77,15 @@ function AddEmployees() {
 }
 
 
-
-// function viewDepartment() {
-//     console.log("View Department function initialized");
-//     connection.query("SELECT * from department", (err, data) => {
-//         if (err) throw err;
-//         console.table(data);
-//         direction();
-//     })
-// }
+//============= View Departments ==========================//
+function viewDepartment() {
+    console.log("View Department function initialized");
+    connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;", (err, data) => {
+        if (err) throw err;
+        console.table(data);
+        direction();
+    })
+}
 
 function start() {
     connection.query('SELECT * FROM employee', (err, data) => {

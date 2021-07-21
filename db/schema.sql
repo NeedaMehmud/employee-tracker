@@ -1,4 +1,3 @@
---CREATING DATABASE --
 DROP DATABASE IF EXISTS employee_managementDB;
 
 CREATE DATABASE employee_managementDB;

@@ -10,6 +10,9 @@ INSERT INTO department (name)
 VALUE ("Information Technology");
 INSERT INTO department (name)
 VALUE ("Human Resources");
+INSERT INTO department (name)
+VALUE ("Legal");
+
 
 INSERT INTO role (title, salary, department_id)
 VALUE ("Lead Engineer", 150000, 2);
