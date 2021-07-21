@@ -41,6 +41,7 @@ function direction() {
                     viewDepartment()
                     break;
                 case "View Roles":
+                    viewRoles()
                     break;
                 case "View Employees":
                     break;
@@ -68,11 +69,10 @@ function direction() {
 function AddEmployees() {
     console.log("inside add employees");
     connection.query("SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
-        (err, res) => {
+        (err, data) => {
             if (err) throw err
             console.log("before results")
-            console.table(res)
-            console.log("after results")
+            console.table(data)
         })
 }
 
@@ -80,11 +80,22 @@ function AddEmployees() {
 //============= View Departments ==========================//
 function viewDepartment() {
     console.log("View Department function initialized");
-    connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;", (err, data) => {
-        if (err) throw err;
-        console.table(data);
-        direction();
-    })
+    connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;",
+        (err, data) => {
+            if (err) throw err;
+            console.table(data);
+            // direction();
+        })
+}
+
+//============= View All Roles ==========================//
+function viewRoles() {
+    connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;",
+        (err, data) => {
+            if (err) throw err;
+            console.table(data);
+            // direction();
+        })
 }
 
 function start() {
