@@ -1,23 +1,21 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const chalkPipe = require('chalk-pipe');
 
+//================ Connect to the Database =================== //
 const connection = mysql.createConnection({
     host: 'localhost',
-    port: 3306,
     user: 'root',
-    password: '',
+    password: 'root1234',
     database: 'employee_managementDB',
 });
 
-
-//'INSERT INTO products SET? iceCreamCRUD.js
-// Connect to the DB
 connection.connect((err) => {
     if (err) throw err;
     console.log(`connected as id ${connection.threadId}\n`);
     start();
 });
-
+//================== Initial Prompt =======================//
 function direction() {
     inquirer.prompt({
         name: 'direction',
@@ -31,39 +29,33 @@ function direction() {
             'Add Roles',
             'Add Employees',
             "Update Employee's Role",
-            'Exit']
-
+            'Exit'],
+        transformer: function (blue) {
+            return chalkPipe(blue)(blue);
+        }
     })
-        // .then((response) => {
-        //     if (response === "View Department") {
-        //         console.log("You chose View Department.../n");
-        //         viewDepartment();
-        //     } else if (response.direction === "Add Employees") {
-        //         console.log("You chose to Add Employees...\n");
-        //         AddEmployees();
-        //     }
-        //     else if (response.direction === "Exit") {
-        //         console.log("You chose to Exit .../n");
-        //         connection.end();
-        //     }
-        // });
-        .then(function (data) {
-            switch (data.choice) {
-                case "View All Employees?":
+        .then((data) => {
+            console.log(data.direction);
+            switch (data.direction) {
+                case "View Department":
                     break;
-                case "View All Employee's By Roles?":
+                case "View Roles":
                     break;
-                case "View all Emplyees By Deparments":
+                case "View Employees":
                     break;
-                case "Add Employee?":
+                case "Add Department":
                     break;
-                case "Update Employee's role":
+                case "Add Roles":
                     break;
-                case "Add Role?":
+                case "Add Employees":
+                    AddEmployees();
                     break;
-                case "Add Department?":
+                case "Update Employee's Role":
                     break;
                 case "Exit":
+                    break;
+                default:
+                    console.log("You must select something");
                     break;
 
             }
@@ -71,30 +63,28 @@ function direction() {
 
 }
 
+//============= Add Employees ==========================//
 function AddEmployees() {
-    connection.query('Select * from role', (err, data) => {
-        // OR
-        // const roleChoices = data.map(role) => {
-        //     return {
-        //         name: role.title,
-        //         value: role.id,
-        //     }
-    })
-    // console.table(data)
+    console.log("inside add employees");
+    connection.query("SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
+        (err, res) => {
+            if (err) throw err
+            console.log("before results")
+            console.table(res)
+            console.log("after results")
+        })
 }
 
 
 
-
-
-function viewDepartment() {
-    console.log("View Department function initialized");
-    connection.query("SELECT * from department", (err, data) => {
-        if (err) throw err;
-        console.table(data);
-        direction();
-    })
-}
+// function viewDepartment() {
+//     console.log("View Department function initialized");
+//     connection.query("SELECT * from department", (err, data) => {
+//         if (err) throw err;
+//         console.table(data);
+//         direction();
+//     })
+// }
 
 function start() {
     connection.query('SELECT * FROM employee', (err, data) => {
