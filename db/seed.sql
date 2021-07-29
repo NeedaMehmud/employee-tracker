@@ -19,11 +19,26 @@ CREATE TABLE employee(
 );
 
 INSERT INTO department(department_name)
-VALUES("Engineering"), ("Sales"), ("Finance"), ("Legal"), ("Marketing");
+VALUES
+("Engineering"), 
+("Sales"), 
+("Finance"), 
+("Legal"), 
+("Marketing");
 
 INSERT INTO role(title, salary, department_id)
-VALUES("Engineer", 85000, 1), ("Senior Engineer", 125000, 1), ("CEO", 350000, 3), ("Attorney", 300000, 4);
+VALUES
+("Lead Engineer", 85000, 1), 
+("Software Engineer Intern", 60000, 1), 
+("Lead Sales Respresentive", 80000, 2)
+("CEO", 350000, 3), 
+("Director of Engineering", 300000, 4);
 
 INSERT INTO employee(first_name, last_name, role_id, manager_id)
-VALUES ('Laila', 'Bashir', 1, 2), ('Kai', 'Lori', 1, null), ('Mia', 'Bilkees', 1, 2), ('Ahmed', 'Khan', 2, 2), ('Lia', 'Kumar', 4, null);
+VALUES 
+('Laila', 'Bashir', 1, 4), 
+('Kai', 'Lori', 3, null), 
+('Mia', 'Bilkees', 5, 2), 
+('Ahmed', 'Khan', 2, 3), 
+('Lia', 'Kumar', 4, null);
 
