@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const chalk = require('chalk');
-const validate = require('./javascript/validate');
+const validateQuery = require('./Query');
 
 //==== connect to the DB ====//
 const connection = mysql.createConnection({
@@ -179,7 +179,7 @@ const addEmployee = () => {
             type: 'input',
             name: 'fistName',
             message: "What is the employee's first name?",
-            validate: addFirstName => {
+            validateQuery: addFirstName => {
                 if (addFirstName) {
                     return true;
                 } else {
@@ -192,7 +192,7 @@ const addEmployee = () => {
             type: 'input',
             name: 'lastName',
             message: "What is the employee's last name?",
-            validate: addLastName => {
+            validateQuery: addLastName => {
                 if (addLastName) {
                     return true;
                 } else {
@@ -280,13 +280,13 @@ const addRole = () => {
                         name: 'newRole',
                         type: 'input',
                         message: 'What is the name of your new role?',
-                        validate: validate.validateString
+                        validateQuery: validateQuery.validateString
                     },
                     {
                         name: 'salary',
                         type: 'input',
                         message: 'What is the salary of this new role?',
-                        validate: validate.validateSalary
+                        validateQuery: validateQuery.validateSalary
                     }
                 ])
                 .then((answer) => {
@@ -318,7 +318,7 @@ const addDepartment = () => {
                 name: 'newDepartment',
                 type: 'input',
                 message: 'What is the name of your new Department?',
-                validate: validate.validateString
+                validateQuery: validateQuery.validateString
             }
         ])
         .then((answer) => {
