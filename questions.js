@@ -256,7 +256,7 @@ const addEmployee = () => {
                                         if (error) throw error;
                                         console.log(chalk.yellow.bold(`====================================================================================`));
                                         console.log(chalk.redBright(`New Employee has been added!`));
-                                        console.log(chalk.yellow.bold(`====================================================================================`));                                        viewAllEmployees();
+                                        console.log(chalk.yellow.bold(`====================================================================================`)); viewAllEmployees();
                                     });
                                 });
                         });
@@ -408,7 +408,7 @@ const updateEmployeeRole = () => {
                             if (error) throw error;
                             console.log(chalk.yellow.bold(`====================================================================================`));
                             console.log(chalk.redBright(`Employee role update!`));
-                            console.log(chalk.yellow.bold(`====================================================================================`));                            start();
+                            console.log(chalk.yellow.bold(`====================================================================================`)); start();
                         }
                     );
                 });
@@ -468,7 +468,7 @@ const updateEmployeeManager = () => {
                             if (error) throw error;
                             console.log(chalk.yellow.bold(`====================================================================================`));
                             console.log(chalk.redBright(`Updated employee manager!`));
-                            console.log(chalk.yellow.bold(`====================================================================================`));                            start();
+                            console.log(chalk.yellow.bold(`====================================================================================`)); start();
                         }
                     );
                 }
@@ -504,6 +504,7 @@ const removeEmployee = () => {
                     ) {
                         employeeId = employee.id;
                     }
+
                 });
 
                 let sql = `DELETE FROM employee WHERE employee.id = ?`;
@@ -511,7 +512,8 @@ const removeEmployee = () => {
                     if (error) throw error;
                     console.log(chalk.yellow.bold(`====================================================================================`));
                     console.log(chalk.redBright(`Employee successfully removed!`));
-                    console.log(chalk.yellow.bold(`====================================================================================`));                    viewAllEmployees();
+                    console.log(chalk.yellow.bold(`====================================================================================`));
+                    viewAllEmployees();
                 });
             });
     });
@@ -542,6 +544,10 @@ const removeRole = () => {
                     if (answer.chosenRole === role.title) {
                         roleId = role.id;
                     }
+                    else {
+                        console.log("check your syntax");
+                    }
+
                 });
 
                 let sql = `DELETE FROM role WHERE role.id = ?`;
@@ -549,7 +555,8 @@ const removeRole = () => {
                     if (error) throw error;
                     console.log(chalk.yellow.bold(`====================================================================================`));
                     console.log(chalk.redBright(`Role successfully removed!`));
-                    console.log(chalk.yellow.bold(`====================================================================================`));                    viewAllRoles();
+                    console.log(chalk.yellow.bold(`====================================================================================`));
+                    viewAllRoles();
                 });
             });
     });
@@ -576,17 +583,21 @@ const removeDepartment = () => {
                 let departmentId;
 
                 response.forEach((department) => {
-                    if (answer.hoseDepartment === department.department_name) {
+                    if (answer.choseDepartment === department.department_name) {
                         departmentId = department.id;
+                    } else {
+                        console.log("check your syntax");
                     }
                 });
 
+                console.log(departmentId);
                 let sql = `DELETE FROM department WHERE department.id = ?`;
                 connection.query(sql, [departmentId], (error) => {
                     if (error) throw error;
                     console.log(chalk.yellow.bold(`====================================================================================`));
                     console.log(chalk.redBright(`Department successfully removed!`));
-                    console.log(chalk.yellow.bold(`====================================================================================`));                    viewAllDepartments();
+                    console.log(chalk.yellow.bold(`====================================================================================`));
+                    viewAllDepartments();
                 });
             });
     });
