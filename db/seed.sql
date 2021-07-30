@@ -30,7 +30,7 @@ INSERT INTO role(title, salary, department_id)
 VALUES
 ("Lead Engineer", 85000, 1), 
 ("Software Engineer Intern", 60000, 1), 
-("Lead Sales Respresentive", 80000, 2)
+("Lead Sales Respresentive", 80000, 2),
 ("CEO", 350000, 3), 
 ("Director of Engineering", 300000, 4);
 

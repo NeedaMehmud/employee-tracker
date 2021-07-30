@@ -1,23 +1,26 @@
+//const connection = require('./connection')
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const validateQuery = require('./Query');
 
 //==== connect to the DB ====//
+const mysql = require('mysql');
+
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'root1234',
     database: 'employee_managementDB',
-});
-
-connection.connect((err) => {
+  });
+  
+  connection.connect(function(err) {
     if (err) throw err;
-    console.log(`connected as id ${connection.threadId}\n`);
+    console.log("Connected!");
     start();
-});
+  });
 
 //==== promtp user ====//
-const promptUser = () => {
+const start = () => {
     inquirer.prompt([
         {
             name: 'choices',
@@ -114,10 +117,10 @@ const viewAllEmployees = () => {
                   WHERE department.id = role.department_id 
                   AND role.id = employee.role_id
                   ORDER BY employee.id ASC`;
-    connection.promise().query(sql, (error, response) => {
+    connection.query(sql, (error, response) => {
         if (error) throw error;
         console.table(response);
-        promptUser();
+        start();
     });
 };
 
@@ -129,7 +132,7 @@ const viewAllRoles = () => {
     connection.promise().query(sql, (error, response) => {
         if (error) throw error;
         response.forEach((role) => { console.log(role.title); });
-        promptUser();
+        start();
     });
 };
 
@@ -139,7 +142,7 @@ const viewAllDepartments = () => {
     connection.promise().query(sql, (error, response) => {
         if (error) throw error;
         console.table(response);
-        promptUser();
+        start();
     });
 };
 
@@ -154,7 +157,7 @@ const viewEmployeesByDepartment = () => {
     connection.query(sql, (error, response) => {
         if (error) throw error;
         console.table(response);
-        promptUser();
+        start();
     });
 };
 
@@ -168,7 +171,7 @@ const viewDepartmentBudget = () => {
     connection.query(sql, (error, response) => {
         if (error) throw error;
         console.table(response);
-        promptUser();
+        start();
     });
 };
 
@@ -388,7 +391,7 @@ const updateEmployeeRole = () => {
                         (error) => {
                             if (error) throw error;
                             console.log(chalk.greenBright(`Employee Role Updated`));
-                            promptUser();
+                            start();
                         }
                     );
                 });
@@ -437,7 +440,7 @@ const updateEmployeeManager = () => {
 
                 if (validate.isSame(answer.chosenEmployee, answer.newManager)) {
                     console.log(chalk.redBright(`Invalid Manager Selection`));
-                    promptUser();
+                    start();
                 } else {
                     let sql = `UPDATE employee SET employee.manager_id = ? WHERE employee.id = ?`;
 
@@ -447,7 +450,7 @@ const updateEmployeeManager = () => {
                         (error) => {
                             if (error) throw error;
                             console.log(chalk.greenBright(`Employee Manager Updated`));
-                            promptUser();
+                            start();
                         }
                     );
                 }
@@ -567,3 +570,4 @@ const removeDepartment = () => {
             });
     });
 };
+
